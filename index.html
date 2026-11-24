@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CodeFive | Training Intelligence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="brand">
+        <div class="volvo">VOLVO</div>
+
+        <div class="brand-divider"></div>
+
+        <div>
+            <strong>CODEFIVE</strong>
+            <small>TRAINING INTELLIGENCE SYSTEM</small>
+        </div>
+    </div>
+
+    <div class="header-actions">
+
+        <span class="online">
+            <i></i> ESTACIÓN LOCAL
+        </span>
+
+        <button id="cameraBtn">◉ Cámara</button>
+
+        <button id="micBtn">🎙 Activar voz</button>
+
+        <button id="resetBtn">↻ Reiniciar</button>
+
+    </div>
+
+</header>
+
+<main>
+
+    <section class="intro">
+
+        <div>
+            <div class="eyebrow">TÉCNICOS DEL MAÑANA / CODEFIVE</div>
+
+            <h1>Training Intelligence</h1>
+
+            <p>Entrenamiento inmersivo y evaluación multimodal de competencias.</p>
+        </div>
+
+        <div class="version">
+            <span>PROTOTYPE BUILD</span>
+            <strong>06.00</strong>
+        </div>
+
+    </section>
+
+    <section class="metrics">
+
+        <article class="metric">
+            <span>Precisión técnica</span>
+            <strong id="accuracy">—</strong>
+            <small>Acciones evaluadas</small>
+        </article>
+
+        <article class="metric">
+            <span>Tiempo de sesión</span>
+            <strong id="sessionTime">00:00</strong>
+            <small>Tiempo transcurrido</small>
+        </article>
+
+        <article class="metric">
+            <span>Errores técnicos</span>
+            <strong id="errors">0</strong>
+            <small>Según la práctica</small>
+        </article>
+
+        <article class="metric">
+            <span>Solicitudes de ayuda</span>
+            <strong id="helpCount">0</strong>
+            <small>Asistencia registrada</small>
+        </article>
+
+        <article class="metric">
+            <span>Autonomía</span>
+            <strong id="autonomy">—</strong>
+            <small>Pasos sin asistencia</small>
+        </article>
+
+        <article class="metric">
+            <span>Eventos registrados</span>
+            <strong id="eventCount">0</strong>
+            <small>Activity Logger</small>
+        </article>
+
+    </section>
+
+    <div class="dashboard">
+
+        <aside class="left-column">
+
+            <details class="panel inventory" id="inventory" open>
+
+                <summary class="panel-title">
+                    Inventario técnico
+                    <small id="inventoryCount">60 herramientas</small>
+                </summary>
+
+                <div class="inventory-content">
+
+                    <input
+                        id="toolSearch"
+                        type="search"
+                        placeholder="Buscar herramienta..."
+                        autocomplete="off"
+                    >
+
+                    <div id="toolList"></div>
+
+                </div>
+
+            </details>
+
+            <section class="panel manual-panel">
+
+                <div class="panel-title">Control manual</div>
+
+                <div class="gesture-grid">
+
+                    <button data-gesture="open">
+                        <span>✋</span>
+                        Abrir mano
+                    </button>
+
+                    <button data-gesture="grip">
+                        <span>✊</span>
+                        Cerrar mano
+                    </button>
+
+                    <button data-gesture="approach">
+                        <span>↘</span>
+                        Acercar mano
+                    </button>
+
+                    <button data-gesture="bolt">
+                        <span>◎</span>
+                        Acoplar
+                    </button>
+
+                    <button data-gesture="turn">
+                        <span>↻</span>
+                        Girar muñeca
+                    </button>
+
+                </div>
+
+            </section>
+
+        </aside>
+
+        <section class="center-column">
+
+            <section class="panel viewer-panel">
+
+                <div class="panel-title">
+                    Estación de entrenamiento 3D
+
+                    <span class="technical" id="fps">— FPS</span>
+                </div>
+
+                <div class="scene-wrapper">
+
+                    <div id="scene"></div>
+
+                    <div class="scene-tag">
+                        DIGITAL WORKSTATION
+                    </div>
+
+                    <div class="view-controls">
+
+                        <button data-command="zoom-in" title="Acercar">＋</button>
+
+                        <button data-command="zoom-out" title="Alejar">−</button>
+
+                        <button data-command="front">Frente</button>
+
+                        <button data-command="back">Atrás</button>
+
+                        <button data-command="left">Izq.</button>
+
+                        <button data-command="right">Der.</button>
+
+                        <button data-command="top">Arriba</button>
+
+                        <button data-command="reset-view">↻</button>
+
+                    </div>
+
+                    <div id="sceneMessage">
+                        Selecciona una herramienta para comenzar.
+                    </div>
+
+                </div>
+
+                <div class="tool-info">
+
+                    <strong>Información técnica</strong>
+
+                    <p id="toolDescription">
+                        Selecciona una herramienta del inventario.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <section class="voice-panel">
+
+                <div class="voice-header">
+
+                    <div class="voice-symbol">🎙</div>
+
+                    <div>
+                        <span>CODEFIVE VOICE INTELLIGENCE</span>
+
+                        <strong id="voiceState">
+                            Micrófono desactivado
+                        </strong>
+                    </div>
+
+                    <div class="audio-indicator">
+                        <strong id="audioLevel">—</strong>
+                        <small id="audioSignal">Sin captura</small>
+                    </div>
+
+                </div>
+
+                <canvas id="waveform"></canvas>
+
+                <div class="transcript">
+
+                    <small>TRANSCRIPCIÓN</small>
+
+                    <p id="transcript">Esperando una instrucción...</p>
+
+                </div>
+
+                <div class="assistant-response">
+
+                    <small>RESPUESTA DEL ASISTENTE</small>
+
+                    <p id="voiceResponse">
+                        Hola. Soy tu asistente de entrenamiento.
+                        ¿En qué puedo ayudarte?
+                    </p>
+
+                </div>
+
+                <div class="voice-options">
+
+                    <label>
+                        <input type="checkbox" id="wakeWord">
+                        Exigir Hola, Volvo
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="voiceFeedback" checked>
+                        Respuesta hablada
+                    </label>
+
+                </div>
+
+                <div id="chatHistory"></div>
+
+                <form id="chatForm">
+
+                    <input
+                        id="chatInput"
+                        placeholder="Escribe una pregunta o instrucción..."
+                        autocomplete="off"
+                    >
+
+                    <button type="submit">Enviar ↗</button>
+
+                </form>
+
+            </section>
+
+        </section>
+
+        <aside class="right-column">
+
+            <section class="panel">
+
+                <div class="panel-title">Seguimiento óptico</div>
+
+                <div class="camera-frame">
+
+                    <div id="cameraPlaceholder">
+
+                        <span>◎</span>
+
+                        <p>Cámara desactivada</p>
+
+                    </div>
+
+                    <video id="video" autoplay muted playsinline></video>
+
+                    <canvas id="overlay"></canvas>
+
+                </div>
+
+                <div class="camera-footer">
+
+                    <span id="cameraStatus">Desactivada</span>
+
+                    <label>
+                        <input type="checkbox" id="swapHands" checked>
+                        Corregir lateralidad
+                    </label>
+
+                </div>
+
+            </section>
+
+            <section class="panel">
+
+                <div class="panel-title">Telemetría en vivo</div>
+
+                <div class="telemetry-list">
+
+                    <div>
+                        <span>Manos activas</span>
+                        <strong id="handCount">2</strong>
+                    </div>
+
+                    <div>
+                        <span>Izquierda</span>
+                        <strong id="leftStatus">—</strong>
+                    </div>
+
+                    <div>
+                        <span>Derecha</span>
+                        <strong id="rightStatus">—</strong>
+                    </div>
+
+                    <div>
+                        <span>Herramienta</span>
+                        <strong id="selectedTool">Ninguna</strong>
+                    </div>
+
+                    <div>
+                        <span>Agarre</span>
+                        <strong id="gripStatus">Libre</strong>
+                    </div>
+
+                    <div>
+                        <span>Audio</span>
+                        <strong id="noiseStatus">Desactivado</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="panel practice-panel">
+
+                <div class="panel-title">Práctica técnica</div>
+
+                <div class="practice-content">
+
+                    <span class="eyebrow">ESCENARIO 01</span>
+
+                    <h3>Operación mecánica</h3>
+
+                    <p>Desmontaje virtual de un elemento de fijación.</p>
+
+                    <label for="mode">Modalidad</label>
+
+                    <select id="mode">
+                        <option value="training">Entrenamiento</option>
+                        <option value="evaluation">Evaluación</option>
+                    </select>
+
+                    <div class="progress-heading">
+
+                        <span>Progreso</span>
+
+                        <strong id="progressText">0%</strong>
+
+                    </div>
+
+                    <div class="progress-track">
+                        <div id="progressBar"></div>
+                    </div>
+
+                    <small id="taskStatus">Práctica en curso</small>
+
+                    <button class="secondary-button" data-command="restart">
+                        Reiniciar práctica
+                    </button>
+
+                </div>
+
+            </section>
+
+            <details class="panel" id="voiceHelp">
+
+                <summary class="panel-title">
+                    Biblioteca de comandos
+                </summary>
+
+                <div id="commandList"></div>
+
+            </details>
+
+        </aside>
+
+    </div>
+
+    <section class="panel logger-panel">
+
+        <div class="panel-title">
+
+            <div>
+                Activity Logger
+
+                <small id="storageStatus">IndexedDB local</small>
+            </div>
+
+            <button data-command="export" class="export-button">
+                Exportar resultados ↓
+            </button>
+
+        </div>
+
+        <div id="eventLog"></div>
+
+    </section>
+
+    <footer>
+
+        <strong>CODEFIVE / INNOVATECNM 2026</strong>
+
+        <span>Prototipo académico. Modelos y mediciones simulados. No sustituye procedimientos técnicos autorizados.</span>
+
+    </footer>
+
+</main>
+
+<script type="module" src="./js/main.js"></script>
+
+</body>
+</html>
